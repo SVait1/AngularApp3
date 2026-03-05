@@ -16,22 +16,6 @@ jobs:
       uses: actions/checkout@v4
 
     # -----------------------------
-    # Angular build
-    # -----------------------------
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-
-    - name: Install Angular dependencies
-      working-directory: angularapp3.client
-      run: npm install
-
-    - name: Build Angular (production)
-      working-directory: angularapp3.client
-      run: npm run build -- --configuration production
-
-    # -----------------------------
     # .NET build
     # -----------------------------
     - name: Setup .NET
@@ -61,7 +45,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Docker image
-      run: docker build -t ghcr.io/${OWNER_LC}/angularapp3:latest angularapp3.client
+      run: docker build -t ghcr.io/${OWNER_LC}/angularapp3:latest .
 
     - name: Push Docker image
       run: docker push ghcr.io/${OWNER_LC}/angularapp3:latest
