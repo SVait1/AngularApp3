@@ -1,21 +1,31 @@
 # -----------------------------
-# Stage 1: Build .NET + Angular
+# Stage 1: Build Angular (Node)
+# -----------------------------
+FROM node:20 AS client
+
+WORKDIR /client
+COPY angularapp3.client/ .
+
+RUN npm ci
+RUN npm run build -- --configuration production
+
+# -----------------------------
+# Stage 2: Build .NET
 # -----------------------------
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 
 WORKDIR /src
-
-# Копируем проекты
 COPY AngularApp3.Server/ AngularApp3.Server/
-COPY angularapp3.client/ angularapp3.client/
 
-# Angular собирается внутри .csproj автоматически
+# Копируем Angular dist в wwwroot
+COPY --from=client /client/dist/angularapp3.client/browser /src/AngularApp3.Server/wwwroot
+
 WORKDIR /src/AngularApp3.Server
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 
 # -----------------------------
-# Stage 2: Runtime
+# Stage 3: Runtime
 # -----------------------------
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 
