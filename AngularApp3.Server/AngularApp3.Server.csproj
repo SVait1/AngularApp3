@@ -17,22 +17,16 @@
 
   <!-- Автоматическая сборка Angular -->
   <Target Name="BuildClient" BeforeTargets="Build">
-    <!-- 1. Устанавливаем зависимости -->
-    <Exec Command="cd ../angularapp3.client &amp; &amp; npm install" />
+    <Exec Command="cd ../angularapp3.client &amp;&amp; npm ci" />
+    <Exec Command="cd ../angularapp3.client &amp;&amp; npm run build -- --configuration production" />
 
-    <!-- 2. Production-сборка Angular 21 -->
-    <Exec Command="cd ../angularapp3.client &amp; &amp; npm run build -- --configuration production" />
-
-    <!-- 3. Очищаем wwwroot -->
     <RemoveDir Directories="wwwroot" />
     <MakeDir Directories="wwwroot" />
 
-    <!-- 4. Копируем ВСЮ Angular-сборку -->
     <Copy SourceFiles="@(ClientDistFiles)" DestinationFolder="wwwroot\%(RecursiveDir)" />
   </Target>
 
   <ItemGroup>
-    <!-- ВАЖНО: Angular 21 кладёт файлы в dist/<project>/browser -->
     <ClientDistFiles Include="..\angularapp3.client\dist\angularapp3.client\browser\**\*.*" />
   </ItemGroup>
 
