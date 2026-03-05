@@ -1,30 +1,26 @@
-# ---------- БАЗОВЫЙ BUILDER ----------
-FROM node:20-alpine AS builder
+# -----------------------------
+# Stage 1: Build .NET + Angular
+# -----------------------------
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-# Рабочая директория
+WORKDIR /src
+
+# Копируем .NET проект
+COPY AngularApp3.Server/ AngularApp3.Server/
+COPY angularapp3.client/ angularapp3.client/
+
+# ВАЖНО: Angular собирается внутри .csproj автоматически
+WORKDIR /src/AngularApp3.Server
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/publish
+
+# -----------------------------
+# Stage 2: Runtime
+# -----------------------------
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
 WORKDIR /app
-
-# Кэшируем зависимости: сначала копируем только package*.json
-COPY package*.json ./
-
-# Устанавливаем зависимости (npm ci быстрее и детерминированнее)
-RUN npm install
-
-# Теперь копируем весь проект
-COPY . .
-
-# Сборка Angular
-RUN npm run build -- --configuration production
-
-
-# ---------- NGINX ДЛЯ ПРОДА ----------
-FROM nginx:1.27-alpine AS production
-
-# Удаляем дефолтный конфиг и копируем свой (опционально)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Копируем собранный Angular
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=build /app/publish .
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["dotnet", "AngularApp3.Server.dll"]
