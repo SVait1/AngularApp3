@@ -18,10 +18,10 @@
   <!-- Автоматическая сборка Angular -->
   <Target Name="BuildClient" BeforeTargets="Build">
     <!-- 1. Устанавливаем зависимости -->
-    <Exec Command="cd ../angularapp3.client && npm install" />
+    <Exec Command="cd ../angularapp3.client &amp; &amp; npm install" />
 
     <!-- 2. Production-сборка Angular 21 -->
-    <Exec Command="cd ../angularapp3.client && npm run build -- --configuration production" />
+    <Exec Command="cd ../angularapp3.client &amp; &amp; npm run build -- --configuration production" />
 
     <!-- 3. Очищаем wwwroot -->
     <RemoveDir Directories="wwwroot" />
