@@ -1,0 +1,9 @@
+/* src/styles.css */
+app-ls-content {
+  display: none !important;
+}
+* {
+  outline: 1px solid red !important;
+}
+
+/* angular:styles/global:styles */

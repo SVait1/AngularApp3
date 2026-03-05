@@ -1,0 +1,60 @@
+:host {
+  max-width: 1280px;
+  padding: 2rem;
+  text-align: center;
+  pointer-events: auto;
+}
+
+th, td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+table {
+    margin: 0 auto;
+}
+
+input {
+  display: inline-block;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.add-box {
+  margin-bottom: 10px;
+}
+
+.filters {
+  margin: 10px 0;
+}
+
+.filters button {
+  margin-right: 5px;
+  padding: 5px 10px;
+}
+
+.filters button.active {
+  background-color: #0078ff;
+  color: white;
+}
+
+.stats {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.stats span {
+  margin-right: 15px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}

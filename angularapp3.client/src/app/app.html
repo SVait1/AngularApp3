@@ -1,0 +1,28 @@
+<h1>Todo List</h1>
+
+<div class="stats">
+  <span>Всего: {{ totalCount }}</span>
+  <span>Активные: {{ activeCount }}</span>
+  <span>Выполненные: {{ doneCount }}</span>
+</div>
+
+<div class="add-box">
+  <input #taskInpput [(ngModel)]="title"
+         placeholder="Введите задачу"
+         (keyup.enter)="add()" />
+  <button (click)="add()">Добавить</button>
+</div>
+
+<div class="filters">
+  <button (click)="setFilter('all')" [class.active]="filter === 'all'">Все</button>
+  <button (click)="setFilter('active')" [class.active]="filter === 'active'">Активные</button>
+  <button (click)="setFilter('done')" [class.active]="filter === 'done'">Выполненные</button>
+</div>
+
+<ul [@filterAnim]="filteredTodos.length">
+  <li *ngFor="let t of filteredTodos; trackBy: trackById" @todoAnim>
+    <input type="checkbox" [(ngModel)]="t.isDone" (change)="toggle(t)" />
+    <span [class.done]="t.isDone">{{ t.title }}</span>
+    <button (click)="remove(t.id)">X</button>
+  </li>
+</ul>
