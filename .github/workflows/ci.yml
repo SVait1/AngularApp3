@@ -15,25 +15,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # -----------------------------
-    # .NET build (без Angular)
-    # -----------------------------
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
-    - name: Restore .NET dependencies
-      working-directory: AngularApp3.Server
-      run: dotnet restore
-
-    - name: Build .NET backend
-      working-directory: AngularApp3.Server
-      run: dotnet publish -c Release -o out
-
-    # -----------------------------
-    # Docker build & push
-    # -----------------------------
     - name: Convert owner to lowercase
       run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
@@ -45,7 +26,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Docker image
-      run: docker build -t ghcr.io/${OWNER_LC}/angularapp3:latest angularapp3.client
+      run: docker build -t ghcr.io/${OWNER_LC}/angularapp3:latest .
 
     - name: Push Docker image
       run: docker push ghcr.io/${OWNER_LC}/angularapp3:latest
