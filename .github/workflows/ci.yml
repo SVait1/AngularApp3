@@ -21,7 +21,7 @@ jobs:
 
     - name: Install Angular dependencies
       working-directory: angularapp3.client
-      run: npm ci
+      run: npm install
 
     - name: Build Angular (production)
       working-directory: angularapp3.client
