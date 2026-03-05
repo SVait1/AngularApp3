@@ -8,7 +8,7 @@ RUN npm install
 
 # Копируем весь проект
 COPY . .
-RUN npm run build --configuration production
+RUN npm run build -- --configuration production
 
 # Этап сервера (Nginx)
 FROM nginx:alpine
