@@ -15,19 +15,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Автоматическая сборка Angular -->
-  <Target Name="BuildClient" BeforeTargets="Build">
-    <Exec Command="cd ../angularapp3.client &amp;&amp; npm ci" />
-    <Exec Command="cd ../angularapp3.client &amp;&amp; npm run build -- --configuration production" />
-  
-    <RemoveDir Directories="wwwroot" />
-    <MakeDir Directories="wwwroot" />
-  
-    <Copy SourceFiles="@(ClientDistFiles)" DestinationFolder="wwwroot\%(RecursiveDir)" />
-  </Target>
-
-  <ItemGroup>
-    <ClientDistFiles Include="..\angularapp3.client\dist\angularapp3.client\browser\**\*.*" />
-  </ItemGroup>
-
 </Project>
