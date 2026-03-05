@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v4
 
     # -----------------------------
-    # .NET build
+    # .NET build (без Angular)
     # -----------------------------
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -45,7 +45,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Docker image
-      run: docker build -t ghcr.io/${OWNER_LC}/angularapp3:latest .
+      run: docker build -t ghcr.io/${OWNER_LC}/angularapp3:latest angularapp3.client
 
     - name: Push Docker image
       run: docker push ghcr.io/${OWNER_LC}/angularapp3:latest
