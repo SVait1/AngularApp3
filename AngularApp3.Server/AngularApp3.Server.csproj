@@ -17,8 +17,8 @@
 
 	<!-- Автоматическая сборка Angular -->
 	<Target Name="BuildClient" BeforeTargets="Build">
-		<Exec Command="cd ..\angularapp3.client &amp; npm ci" />
-		<Exec Command="cd ..\angularapp3.client &amp; npm run build" />
+	    <Exec Command="cd ../angularapp3.client && npm install" />
+	    <Exec Command="cd ../angularapp3.client && npm run build" />
 
 		<RemoveDir Directories="wwwroot" />
 		<MakeDir Directories="wwwroot" />
