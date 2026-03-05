@@ -1,12 +1,16 @@
+# Этап сборки Angular
 FROM node:20 AS build
 WORKDIR /app
 
+# Копируем только файлы зависимостей
 COPY package*.json ./
 RUN npm install
 
+# Копируем весь проект
 COPY . .
 RUN npm run build --configuration production
 
+# Этап сервера (Nginx)
 FROM nginx:alpine
 COPY --from=build /app/dist/angularapp3.client /usr/share/nginx/html
 EXPOSE 80
