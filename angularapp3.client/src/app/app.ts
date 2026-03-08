@@ -46,8 +46,8 @@ export class AppComponent {
   todos: TodoItem[] = [];
   filter: Filter = 'all';
 
-  @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
-
+  @ViewChild('taskInput', { static: false }) taskInput!: ElementRef<HTMLInputElement>;
+  
   constructor(private todoService: TodoService) {
     this.load();
   }
@@ -68,7 +68,9 @@ export class AppComponent {
       this.load();
 
       setTimeout(() => {
-        this.taskInput.nativeElement.focus();
+        if (this.taskInput) {
+          this.taskInput.nativeElement.focus();
+        }
       });
     });
   }
