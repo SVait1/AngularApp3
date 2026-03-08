@@ -80,7 +80,13 @@ export class AppComponent {
   }
 
   remove(id: number) {
-    this.todoService.deleteTodo(id).subscribe(() => this.load());
+    this.todoService.deleteTodo(id).subscribe({
+      next: () => this.load(),
+      error: err => {
+        console.error('Ошибка удаления', err);
+        this.load(); // обновляем список, чтобы ID совпали
+      }
+    });
   }
 
   setFilter(f: Filter) {
