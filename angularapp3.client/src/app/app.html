@@ -7,7 +7,7 @@
 </div>
 
 <div class="add-box">
-  <input #taskInpput [(ngModel)]="title"
+  <input #taskInput [(ngModel)]="title"
          placeholder="Введите задачу"
          (keyup.enter)="add()" />
   <button (click)="add()">Добавить</button>
