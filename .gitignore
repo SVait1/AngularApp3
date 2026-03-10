@@ -1,1 +1,22 @@
+# Visual Studio
 .vs/
+*.user
+*.suo
+
+# Build
+bin/
+obj/
+
+# Logs
+*.log
+
+# Angular
+AngularApp3.Client/node_modules/
+AngularApp3.Client/dist/
+
+# EF Core
+Migrations/
+
+# OS
+Thumbs.db
+.DS_Store
